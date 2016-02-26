@@ -1,0 +1,12 @@
+/**
+	The basic styles required for js-grab-animation to function
+ */
+.js-detect-scroll {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
