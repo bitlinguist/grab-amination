@@ -12,7 +12,7 @@ GrabAnimationDefault = {
   currScr: 0,
   scrDirr: false,
   grabbedForAnimation: false,
-  animOffset: 300,
+  animOffset: 150,
   animating: false,
   currentSection: undefined,
   grabbedInterval: false,
@@ -44,7 +44,7 @@ GrabAnimation.createScrollDetector = function () {
     _this.animateSection.call(_this, $(this));
   });
 }
-GrabAnimation.animateSection
+
 GrabAnimation.animateSection = function ($elm) {
   var step, prevSection, animationSection;
 
@@ -86,7 +86,7 @@ GrabAnimation.animationMain = function ($elm) {
     this.removeScrollDetectEvent.call(this);
   }
 
-  varianceDown = this.currScr <= $elm.offset().top;
+  varianceDown = this.currScr <= $elm.offset().top - this.animOffset;
   varianceUp = this.currScr >= $elm.offset().top + this.animOffset;
 
   if (varianceDown || varianceUp) {
