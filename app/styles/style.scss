@@ -2,6 +2,8 @@ $red: #FF6A6A;
 $blue: #79CDCD;
 $lt-blue: #E0EEEE;
 
+* { box-sizing: border-box;}
+
 .full_-vheight {
   height: 100vh;
   background-color: $red;
@@ -11,21 +13,31 @@ $lt-blue: #E0EEEE;
   }
 }
 
-ul {
+.animation-region {
   position: relative;
   width: 100%;
   height: 100%;
   display: block;
   list-style: none;
   padding: 0;
-  
-  & li { 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    padding: .5rem;
-    width: 100%;
-    height: 100%;
-  }
+} 
+
+.grab-animation,
+.fill-parent { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  padding: .5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.grab-animation {
+  opacity: 0;
+  transition: all 250ms ease-in-out;
+}
+
+.grab-animation_-current {
+  opacity: 1;
 }

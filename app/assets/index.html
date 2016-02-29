@@ -9,25 +9,33 @@
   <h1>
     Grab Animation <small>Animate a section of content</small>
   </h1>
-  
+
   <div class="full_-vheight"></div>
   <div class="full_-vheight">
-    <ul class"js-grab-animation">
-      <li class="js-animation" data-slide="1">
-        <p>item 1</p>
-      </li class="js-animation" data-slide="1">
-      <li>
-        <p>item 2</p>
-      </li>
-      <li>
-        <p>item 3</p>
-      </li>
-    </ul>
+    <div class="js-grab-animation full_-vheight">
+      <div class="js-animation grab-animation grab-animation_-current" data-stage="1">
+        <h2>item 1</h2>
+      </div>
+      <div class="js-animation grab-animation" data-stage="2">
+        <h2>item 2</h2>
+      </div>
+      <div class="js-animation grab-animation" data-stage="3">
+        <h2>item 3</h2>
+      </div>
+    </div>
   </div>
   <div class="full_-vheight"></div>
   <div class="full_-vheight"></div>
 
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="app.js"></script>
+  <script type="text/javascript">
+    var GrabAnimation = require('scripts/grab-animation');
+    (function () {
+      var grabAnimation;
+      grabAnimation = Object.create(GrabAnimation);
+      grabAnimation.init();  
+    })();
+  </script>
 </body>
 </html>
