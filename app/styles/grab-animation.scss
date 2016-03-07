@@ -1,5 +1,5 @@
 /**
-	The basic styles required for js-grab-animation to function
+  The basic styles required for js-grab-animation to function
  */
 .js-detect-scroll {
   position: fixed;
@@ -9,6 +9,12 @@
   top: 0;
   left: 0;
   opacity: 0;
+  z-index: 9999;
 }
+
+.grab-animation-underlay {
+  pointer-events: none;
+}
+
 .grab-animation_-current {}
 .grab-animation {}

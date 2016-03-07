@@ -1,6 +1,10 @@
 'use strict';
 
-var GrabAnimation, GrabAnimationDefault;  
+var GrabAnimation, GrabAnimationDefault, GrabAnimationGlobs, globKeys;
+GrabAnimationGlobs = {
+  animating: false,
+  disabled: false
+}
 
 GrabAnimationDefault = {
   grabables: $('.js-grab-animation'),
@@ -17,12 +21,34 @@ GrabAnimationDefault = {
   currentSection: undefined,
   grabbedInterval: false,
   exit: function ($elm) {
-    $elm.removeClass('grab-animation_-current');
+    $elms.each(function () {
+      var clss, $elm;
+      $elm = $(this);
+      clss = $elm.data('stage-class');
+      if (typeof clss === 'undefined') {
+        clss = 'grab-animation_-current';
+      }
+      $elm.removeClass(clss);
+    });
   },
   enter: function ($elm) {
-    $elm.addClass('grab-animation_-current');
+    $elms.each(function () {
+      var clss, $elm;
+      $elm = $(this);
+      clss = $elm.data('stage-class');
+      if (typeof clss === 'undefined') {
+        clss = 'grab-animation_-current';
+      }
+      $elm.addClass(clss);
+    });
   }
 };
+
+globKeys = Object.keys(GrabAnimationGlobs);
+for(var i = 0, length1 = globKeys.length; i < length1; i++){
+  GrabAnimationDefault[globKeys[i]] = GrabAnimationGlobs[globKeys[i]];
+}
+
 GrabAnimation = Object.create(GrabAnimationDefault);
 
 GrabAnimation.calcScrDirr = function() {
@@ -32,6 +58,24 @@ GrabAnimation.calcScrDirr = function() {
     this.scrDirr = 'down';
   }
 }
+
+GrabAnimation.applyReclick = function () {
+  var _this;
+  _this = this;
+  this.scrollDetector.click(function (e) {
+    _this.maskReclick.call(_this, e);
+  });
+}
+
+GrabAnimation.maskReclick = function (event) {
+  event.preventDefault();
+
+  this.scrollDetector.addClass('grab-animation-underlay');
+  $(document.elementFromPoint(event.clientX, event.clientY)).trigger('click');
+  this.scrollDetector.removeClass('grab-animation-underlay');
+}
+
+
 
 GrabAnimation.createScrollDetector = function () {
   var _this = this;
@@ -43,6 +87,7 @@ GrabAnimation.createScrollDetector = function () {
   this.scrollDetector.scroll(function () {
     _this.animateSection.call(_this, $(this));
   });
+  this.applyReclick.call(this);
 }
 
 GrabAnimation.animateSection = function ($elm) {
@@ -124,6 +169,19 @@ GrabAnimation.grabMain = function ($elm) {
   }
 }
 
+GrabAnimation.getInstance = function () {
+  var _this = this;
+
+  return {
+    disableGrab: function () {
+      _this.disabled = true;
+    },
+    enableGrab: function () {
+      _this.disabled = false;
+    }
+  }
+}
+
 GrabAnimation.init = function () {
   var _this = this;
   this.animationHeight = (this.animationSteps+1)*$(window).height();
@@ -135,7 +193,7 @@ GrabAnimation.init = function () {
       _this.currScr = $(window).scrollTop();
       _this.calcScrDirr.call(_this);
       _this.grabables.each(function () {
-        if (!_this.grabbedInterval) {
+        if (!_this.grabbedInterval  && !_this.disabled) {
           _this.grabMain.call(_this, $(this));
         }
         else {
