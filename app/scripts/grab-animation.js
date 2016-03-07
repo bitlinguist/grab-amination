@@ -20,7 +20,7 @@ GrabAnimationDefault = {
   animating: false,
   currentSection: undefined,
   grabbedInterval: false,
-  exit: function ($elm) {
+  exit: function ($elms) {
     $elms.each(function () {
       var clss, $elm;
       $elm = $(this);
@@ -31,7 +31,7 @@ GrabAnimationDefault = {
       $elm.removeClass(clss);
     });
   },
-  enter: function ($elm) {
+  enter: function ($elms) {
     $elms.each(function () {
       var clss, $elm;
       $elm = $(this);

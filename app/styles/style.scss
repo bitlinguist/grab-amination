@@ -1,7 +1,7 @@
 $red: #FF6A6A;
 $blue: #79CDCD;
 $lt-blue: #E0EEEE;
-
+$yellow: #FFEC8B;
 * { box-sizing: border-box;}
 
 .full_-vheight {
@@ -36,6 +36,13 @@ $lt-blue: #E0EEEE;
 .grab-animation {
   opacity: 0;
   transition: all 250ms ease-in-out;
+
+  &:nth-child(3n-1) {
+    background-color: $yellow;
+  }
+  &:nth-child(3n) {
+    background-color: $blue;
+  }
 }
 
 .grab-animation_-current {
